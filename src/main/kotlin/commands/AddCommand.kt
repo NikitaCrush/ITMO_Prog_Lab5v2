@@ -1,10 +1,12 @@
 package commands
 
-import LabWorkReader
 import data.LabWork
 import data.LabWorkCollection
 import data.Messages
-
+import data.Coordinates
+import data.Difficulty
+import data.Discipline
+import java.time.LocalDateTime
 import utils.Validator
 
 class AddCommand(
@@ -22,26 +24,36 @@ class AddCommand(
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {
-//        val labWorkReader = LabWorkReader(readLineFn)
-//        val labWork = labWorkReader.readLabWorkFromConsole()
-//        return listOf(labWork)
         print("Enter id: ")
-        val id = readLineFn()
+        val id = readLineFn().toLong()
 
         print("Enter name: ")
         val name = readLineFn()
 
+        print("Enter coordinates (x(Long) y(Double)): ")
+        val coordinates = readLineFn().split(" ").map { it.trim() }
+        val x = coordinates[0].toLong()
+        val y = coordinates[1].toDouble()
+
         print("Enter minimalPoint: ")
-        val minimalPoint = readLineFn()
+        val minimalPoint = readLineFn().toInt()
+
+        print("Enter personalQualitiesMinimum: ")
+        val personalQualitiesMinimum = readLineFn().toInt()
 
         print("Enter description (leave empty for null): ")
         val description = readLineFn().ifEmpty { null }
 
         print("Enter difficulty (EASY, NORMAL, TERRIBLE): ")
-        val difficulty = readLineFn().ifEmpty { null }
+        val difficulty = readLineFn().let { if (it.isEmpty()) null else Difficulty.valueOf(it.toUpperCase()) }
 
-        return listOf(id, name, minimalPoint, description ?: "", difficulty ?: "")
+        print("Enter discipline (name selfStudyHours(Long)): ")
+        val disciplineInput = readLineFn().split(" ").map { it.trim() }
+        val disciplineName = disciplineInput[0]
+        val selfStudyHours = disciplineInput[1].toLong()
+        val discipline = Discipline(disciplineName, selfStudyHours)
+
+        val labWork = LabWork(id, name, Coordinates(x, y), LocalDateTime.now(), minimalPoint, personalQualitiesMinimum, difficulty, discipline)
+        return listOf(labWork)
     }
-    }
-
-
+}

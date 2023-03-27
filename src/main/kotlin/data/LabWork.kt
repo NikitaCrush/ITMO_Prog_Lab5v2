@@ -11,8 +11,12 @@ data class LabWork(
     val personalQualitiesMinimum: Int,
     val difficulty: Difficulty?,
     val discipline: Discipline
-)
+) : Comparable<LabWork> {
 
+    override fun compareTo(other: LabWork): Int {
+        return id.compareTo(other.id)
+    }
+}
 
 
 

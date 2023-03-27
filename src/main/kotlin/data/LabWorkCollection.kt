@@ -140,6 +140,9 @@ class LabWorkCollection private constructor(val fileName: String) {
             "sum_of_minimal_point", "min_by_difficulty", "print_unique_minimal_point"
         )
     }
+    fun containsId(id: Long): Boolean {
+        return labWorkQueue.any { it.id == id }
+    }
 
 }
 

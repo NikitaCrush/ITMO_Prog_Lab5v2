@@ -24,36 +24,104 @@ class AddCommand(
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {
-        print("Enter id: ")
-        val id = readLineFn().toLong()
+        val id = generateUniqueId()
+        val name = readNonEmptyString("Enter name: ", readLineFn)
 
-        print("Enter name: ")
-        val name = readLineFn()
+        print("Enter coordinates (x(Long), y(Double)): ")
+        val coordinates = readCoordinates(readLineFn)
 
-        print("Enter coordinates (x(Long) y(Double)): ")
-        val coordinates = readLineFn().split(" ").map { it.trim() }
-        val x = coordinates[0].toLong()
-        val y = coordinates[1].toDouble()
-
-        print("Enter minimalPoint: ")
-        val minimalPoint = readLineFn().toInt()
-
-        print("Enter personalQualitiesMinimum: ")
-        val personalQualitiesMinimum = readLineFn().toInt()
+        val minimalPoint = readInt("Enter minimalPoint: ", readLineFn)
+        val personalQualitiesMinimum = readInt("Enter personalQualitiesMinimum: ", readLineFn)
 
         print("Enter description (leave empty for null): ")
         val description = readLineFn().ifEmpty { null }
 
         print("Enter difficulty (EASY, NORMAL, TERRIBLE): ")
-        val difficulty = readLineFn().let { if (it.isEmpty()) null else Difficulty.valueOf(it.toUpperCase()) }
+        val difficulty = readDifficulty(readLineFn)
 
         print("Enter discipline (name selfStudyHours(Long)): ")
-        val disciplineInput = readLineFn().split(" ").map { it.trim() }
-        val disciplineName = disciplineInput[0]
-        val selfStudyHours = disciplineInput[1].toLong()
-        val discipline = Discipline(disciplineName, selfStudyHours)
+        val discipline = readDiscipline(readLineFn)
 
-        val labWork = LabWork(id, name, Coordinates(x, y), LocalDateTime.now(), minimalPoint, personalQualitiesMinimum, difficulty, discipline)
+        val labWork = LabWork(id, name, coordinates, LocalDateTime.now(), minimalPoint, personalQualitiesMinimum, difficulty, discipline)
         return listOf(labWork)
+    }
+
+    private fun readLong(prompt: String, readLineFn: () -> String): Long {
+        while (true) {
+            try {
+                print(prompt)
+                val value = readLineFn().toLong()
+                return value
+            } catch (e: NumberFormatException) {
+                println("Invalid input. Please enter a valid number.")
+            }
+        }
+    }
+    private fun generateUniqueId(): Long {
+        var id: Long
+        do {
+            id = (1..Long.MAX_VALUE).random()
+        } while (labWorkCollection.containsId(id))
+        return id
+    }
+    private fun readInt(prompt: String, readLineFn: () -> String): Int {
+        while (true) {
+            try {
+                print(prompt)
+                val value = readLineFn().toInt()
+                return value
+            } catch (e: NumberFormatException) {
+                println("Invalid input. Please enter a valid number.")
+            }
+        }
+    }
+
+    private fun readNonEmptyString(prompt: String, readLineFn: () -> String): String {
+        while (true) {
+            print(prompt)
+            val value = readLineFn()
+            if (value.isNotEmpty()) {
+                return value
+            } else {
+                println("Invalid input. Please enter a non-empty string.")
+            }
+        }
+    }
+
+    private fun readCoordinates(readLineFn: () -> String): Coordinates {
+        while (true) {
+            try {
+                val coordinates = readLineFn().split(", ").map { it.trim() }
+                val x = coordinates[0].toLong()
+                val y = coordinates[1].toDouble()
+                return Coordinates(x, y)
+            } catch (e: Exception) {
+                println("Invalid input. Please enter valid coordinates (x(Long), y(Double)).")
+            }
+        }
+    }
+
+    private fun readDifficulty(readLineFn: () -> String): Difficulty? {
+        while (true) {
+            val input = readLineFn()
+            try {
+                return if (input.isEmpty()) null else Difficulty.valueOf(input.toUpperCase())
+            } catch (e: IllegalArgumentException) {
+                println("Invalid input. Please enter a valid difficulty (EASY, NORMAL, TERRIBLE) or leave it empty.")
+            }
+        }
+    }
+
+    private fun readDiscipline(readLineFn: () -> String): Discipline {
+        while (true) {
+            try {
+                val disciplineInput = readLineFn().split(" ").map { it.trim() }
+                val disciplineName = disciplineInput[0]
+                val selfStudyHours = disciplineInput[1].toLong()
+                return Discipline(disciplineName, selfStudyHours)
+            } catch (e: Exception) {
+                println("Invalid input. Please enter a valid discipline (name selfStudyHours(Long)).")
+            }
+        }
     }
 }

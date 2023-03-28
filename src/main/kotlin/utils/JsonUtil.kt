@@ -1,7 +1,5 @@
 package utils
 
-import data.Messages
-import exeptions.CollectionLoadingException
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -9,7 +7,10 @@ import kotlinx.serialization.json.Json
 import java.io.File
 
 object JsonUtil {
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = Json {
+        ignoreUnknownKeys = true
+        prettyPrint = true // Add this line to enable pretty-printing
+    }
 
     fun <T> fromJson(jsonString: String, serializer: KSerializer<T>): T? {
         return try {
@@ -26,12 +27,13 @@ object JsonUtil {
     fun <T> loadFromFile(fileName: String, serializer: KSerializer<T>): T? {
         return try {
             val jsonString = File(fileName).readText()
-            json.decodeFromString(serializer, jsonString)
+            fromJson(jsonString, serializer)
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
+
     fun <T> saveToFile(obj: T, fileName: String, serializer: KSerializer<T>) {
         try {
             val jsonString = json.encodeToString(serializer, obj)

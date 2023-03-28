@@ -34,6 +34,7 @@ class CommandExecutor(private val labWorkCollection: LabWorkCollection, private 
         return commandMap[name.toLowerCase()]
     }
 
+
     fun getAvailableCommands(): Map<String, Command> {
         return commandMap
     }

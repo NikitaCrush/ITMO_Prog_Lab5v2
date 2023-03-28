@@ -1,5 +1,21 @@
 [
     {
+        "id": 5279331409737163794,
+        "name": "f",
+        "coordinates": {
+            "x": 4,
+            "y": 4.0
+        },
+        "creationDate": "2023-03-28T07:30:19.524866",
+        "minimalPoint": 4,
+        "personalQualitiesMinimum": 4,
+        "difficulty": null,
+        "discipline": {
+            "name": "4",
+            "selfStudyHours": 4
+        }
+    },
+    {
         "id": 5887613606139702493,
         "name": "f",
         "coordinates": {

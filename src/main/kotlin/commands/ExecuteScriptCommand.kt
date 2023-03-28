@@ -7,31 +7,47 @@ import java.io.FileNotFoundException
 
 class ExecuteScriptCommand(
     private val commandParser: CommandParser,
-    private val printer: Printer
+    private val printer: Printer,
+    private val nestedLevel: Int = 5 // Add the nestedLevel parameter
 ) : Command {
+    private val maxNestedLevel = 3
+
+    // Add this copy function
+    fun copy(nestedLevel: Int): ExecuteScriptCommand {
+        return ExecuteScriptCommand(commandParser, printer, nestedLevel)
+    }
+
     override fun execute(args: List<Any>): String {
+        if (nestedLevel >= maxNestedLevel) {
+            return "Error: Maximum script nesting level ($maxNestedLevel) exceeded. Aborting."
+        }
+
         val fileName = args[0] as String
         val file = File(fileName)
 
-        if (!file.exists()) {
-            throw FileNotFoundException("File not found: $fileName")
-        }
+        return try {
+            if (!file.exists()) {
+                throw FileNotFoundException("File not found: $fileName")
+            }
 
-        file.forEachLine { line ->
-            if (line.isNotBlank()) {
-                val commandResult = commandParser.parseAndExecute(line)
-                if (commandResult != null) {
-                    printer.println(commandResult)
+            file.forEachLine { line ->
+                if (line.isNotBlank()) {
+                    val commandResult = commandParser.parseAndExecute(line, nestedLevel + 1) // Pass the nested level
+                    if (commandResult != null) {
+                        printer.println(commandResult)
+                    }
                 }
             }
+            "Script executed successfully."
+        } catch (e: FileNotFoundException) {
+            "Error: ${e.message}"
         }
-
-        return "Script executed successfully."
     }
 
-    override fun readArguments(readLineFn: () -> String): List<Any> {
-        print("Enter script file name: ")
-        val fileName = readLineFn()
+
+    override fun readArguments(input: () -> String): List<Any> { // Change the function signature
+        printer.print("Enter script file name: ") // Use printer.print instead of print
+        val fileName = input() // Use input() instead of readLineFn()
         return listOf(fileName)
     }
 }

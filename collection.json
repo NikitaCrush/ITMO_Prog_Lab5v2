@@ -1,18 +1,18 @@
 [
     {
-        "id": 5279331409737163794,
-        "name": "f",
+        "id": 5000096277273819551,
+        "name": "fdsd",
         "coordinates": {
-            "x": 4,
-            "y": 4.0
+            "x": 2,
+            "y": 32.0
         },
-        "creationDate": "2023-03-28T07:30:19.524866",
-        "minimalPoint": 4,
-        "personalQualitiesMinimum": 4,
+        "creationDate": "2023-03-28T07:59:32.5646298",
+        "minimalPoint": 34,
+        "personalQualitiesMinimum": 3,
         "difficulty": null,
         "discipline": {
-            "name": "4",
-            "selfStudyHours": 4
+            "name": "3",
+            "selfStudyHours": 3
         }
     },
     {
@@ -29,6 +29,22 @@
         "discipline": {
             "name": "3",
             "selfStudyHours": 3
+        }
+    },
+    {
+        "id": 5279331409737163794,
+        "name": "f",
+        "coordinates": {
+            "x": 4,
+            "y": 4.0
+        },
+        "creationDate": "2023-03-28T07:30:19.524866",
+        "minimalPoint": 4,
+        "personalQualitiesMinimum": 4,
+        "difficulty": null,
+        "discipline": {
+            "name": "4",
+            "selfStudyHours": 4
         }
     }
 ]

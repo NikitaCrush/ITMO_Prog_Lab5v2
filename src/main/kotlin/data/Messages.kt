@@ -17,6 +17,8 @@ object Messages {
     const val ADD_IF_MAX_SUCCESS = "LabWork has been added because it is the max element."
     const val ADD_IF_MAX_FAIL = "Failed to add LabWork because it is not the max element."
     const val LAB_WORK_INVALID_DATA = "Invalid lab work data. Please check the input."
-
+    const val LAB_WORK_NOT_MAX = "The element is not the maximum and was not added to the collection."
+    const val LAB_WORK_SUCCESS_UPDATE = "Lab work collection updated successfully."
+    const val LAB_WORK_NOT_FOUND = "Can't find object"
 
 }

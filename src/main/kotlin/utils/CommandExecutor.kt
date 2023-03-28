@@ -2,8 +2,7 @@ package utils
 
 import commands.*
 import data.LabWorkCollection
-import data.Messages
-import exeptions.CommandException
+
 
 class CommandExecutor(private val labWorkCollection: LabWorkCollection, private val printer: Printer) {
 
@@ -29,10 +28,7 @@ class CommandExecutor(private val labWorkCollection: LabWorkCollection, private 
         commandMap["print_unique_minimal_point"] = PrintUniqueMinimalPointCommand(labWorkCollection)
     }
 
-    fun executeCommand(commandName: String, args: List<String>): String {
-        val command = commandMap[commandName.toLowerCase()] ?: throw CommandException(Messages.UNKNOWN_COMMAND)
-        return command.execute(args)
-    }
+
 
     fun getCommand(name: String): Command? {
         return commandMap[name.toLowerCase()]

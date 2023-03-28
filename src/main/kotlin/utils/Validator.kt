@@ -1,6 +1,7 @@
 package utils
 
 import data.LabWork
+import utils.LabWorkReader
 
 class Validator {
 
@@ -24,10 +25,6 @@ class Validator {
         return personalQualitiesMinimum != null && personalQualitiesMinimum > 0
     }
 
-    fun validatePersonalQualitiesMaximum(personalQualitiesMaximum: Int?): Boolean {
-        return personalQualitiesMaximum != null && personalQualitiesMaximum > 0
-    }
-
     fun validateDisciplineName(name: String?): Boolean {
         return name != null && name.isNotBlank()
     }
@@ -35,8 +32,6 @@ class Validator {
     fun validateSelfStudyHours(selfStudyHours: Long?): Boolean {
         return selfStudyHours != null
     }
-
-    // ...
 
     fun validateLabWork(labWork: LabWork): Boolean {
         return validateLabWorkName(labWork.name) &&
@@ -48,8 +43,12 @@ class Validator {
                 validateSelfStudyHours(labWork.discipline.selfStudyHours)
     }
 
-    // ...
-
-    // Command-specific validation methods
-    // ...
+    fun validateAndReadLabWork(readLineFn: () -> String): LabWork {
+        val labWorkReader = LabWorkReader(readLineFn)
+        val labWork = labWorkReader.readLabWork()
+        if (!validateLabWork(labWork)) {
+            throw IllegalArgumentException("Invalid lab work data")
+        }
+        return labWork
+    }
 }

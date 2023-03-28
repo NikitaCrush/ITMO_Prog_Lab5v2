@@ -2,32 +2,33 @@ package commands
 
 import data.LabWork
 import data.LabWorkCollection
-import utils.JsonUtil
+import data.Messages
 import utils.Validator
 
-class UpdateCommand(private val labWorkCollection: LabWorkCollection, validator: Validator) : Command {
+class UpdateCommand(
+    private val labWorkCollection: LabWorkCollection,
+    private val validator: Validator
+) : Command {
+
     override fun execute(args: List<Any>): String {
-        val id = (args[0] as String).toInt()
-        val labWork = JsonUtil.fromJson<LabWork>(args[1] as String)
-        labWorkCollection.update(id, labWork)
-        return "Lab work updated successfully."
+        val id = args[0] as Long
+        val labWork = args[1] as LabWork
+
+        if (!validator.validateLabWork(labWork)) {
+            return Messages.LAB_WORK_INVALID_DATA
+        }
+
+        val updated = labWorkCollection.update(id, labWork)
+
+        return if (updated) Messages.LAB_WORK_SUCCESS_UPDATE else Messages.LAB_WORK_NOT_FOUND
     }
+
     override fun readArguments(readLineFn: () -> String): List<Any> {
-        print("Enter id: ")
-        val id = readLineFn()
+        print("Enter the ID of the lab work to update: ")
+        val id = readLineFn().trim().toLong()
 
-        print("Enter name: ")
-        val name = readLineFn()
+        val labWork = validator.validateAndReadLabWork(readLineFn)
 
-        print("Enter minimalPoint: ")
-        val minimalPoint = readLineFn()
-
-        print("Enter description (leave empty for null): ")
-        val description = readLineFn().ifEmpty { null }
-
-        print("Enter difficulty (EASY, NORMAL, TERRIBLE): ")
-        val difficulty = readLineFn().ifEmpty { null }
-
-        return listOf(id, name, minimalPoint, description ?: "", difficulty ?: "")
+        return listOf(id, labWork)
     }
 }

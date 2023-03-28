@@ -1,14 +1,15 @@
 package data
 
-import exeptions.CollectionLoadingException
 import java.io.File
 import java.time.LocalDate
 import java.util.PriorityQueue
+import kotlinx.serialization.builtins.ListSerializer
 import utils.JsonUtil
+import kotlinx.serialization.serializer
 
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+
+
+
 
 
 class LabWorkCollection private constructor(val fileName: String) {
@@ -19,44 +20,26 @@ class LabWorkCollection private constructor(val fileName: String) {
     }
 
     private fun loadFromFile() {
-        val file = File(fileName)
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-
-        val jsonString = file.readText()
-
-        if (jsonString.isNotEmpty()) {
-            try {
-                val labWorkList: List<LabWork> = Json.decodeFromString(jsonString)
-                labWorkQueue.addAll(labWorkList)
-            } catch (e: Exception) {
-                throw CollectionLoadingException(Messages.INVALID_JSON_FORMAT)
-            }
+        try {
+            val labWorkList = JsonUtil.loadFromFile<List<LabWork>>(fileName, ListSerializer(LabWork.serializer()))
+            labWorkList?.let { labWorkQueue.addAll(it) }
+        } catch (e: kotlinx.serialization.SerializationException) {
+            println("Error: Failed to load data from file. The file might be empty or contain invalid content. Starting with an empty collection.")
         }
     }
+
 
     fun saveToFile() {
-        val jsonString = Json.encodeToString(labWorkQueue)
-        File(fileName).writeText(jsonString)
+        JsonUtil.saveToFile(labWorkQueue.toList(), fileName, ListSerializer(LabWork.serializer()))
     }
+
+
 
     companion object {
         fun fromFile(fileName: String): LabWorkCollection {
-            val file = File(fileName)
-            return if (file.exists()) {
-                val json = file.readText()
-                val labWorks = JsonUtil.fromJson<List<LabWork>>(json)
-                LabWorkCollection(fileName).apply {
-                    labWorks?.let { labWorkQueue.addAll(it) } // Add null-safe let function here
-                }
-            } else {
-                LabWorkCollection(fileName)
-            }
+            return LabWorkCollection(fileName)
         }
     }
-
-    // The rest of the class remains unchanged...
 
 
 
@@ -64,14 +47,14 @@ class LabWorkCollection private constructor(val fileName: String) {
         labWorkQueue.add(labWork)
     }
 
-    fun update(id: Int, labWork: LabWork) {
-        removeById(id)
-        labWorkQueue.add(labWork)
+
+    fun removeById(id: Long): Boolean {
+        val initialSize = labWorkQueue.size
+        labWorkQueue.removeIf { it.id == id }
+        return labWorkQueue.size < initialSize
     }
 
-    fun removeById(id: Int) {
-        labWorkQueue.removeIf { it.id.toInt() == id }
-    }
+
 
     fun clear() {
         labWorkQueue.clear()
@@ -87,14 +70,6 @@ class LabWorkCollection private constructor(val fileName: String) {
 
     fun getCreationDate(): LocalDate {
         return LocalDate.now()
-    }
-
-    fun getById(id: Int): LabWork? {
-        return labWorkQueue.find { it.id.toInt() == id }
-    }
-
-    fun getFirst(): LabWork? {
-        return labWorkQueue.peek()
     }
 
     fun removeFirst() {
@@ -132,20 +107,27 @@ class LabWorkCollection private constructor(val fileName: String) {
                 "Number of elements: ${size()}"
     }
 
-    fun getAvailableCommands(): List<String> {
-        return listOf(
-            "help", "info", "show", "add {element}", "update id {element}",
-            "remove_by_id id", "clear", "save", "execute_script file_name", "exit",
-            "remove_first", "remove_head", "add_if_max {element}",
-            "sum_of_minimal_point", "min_by_difficulty", "print_unique_minimal_point"
-        )
-    }
-    fun containsId(id: Long): Boolean {
-        return labWorkQueue.any { it.id == id }
-    }
 
+    fun update(id: Long, newLabWork: LabWork): Boolean {
+        val labWork = labWorkQueue.find { it.id == id }
+        return if (labWork != null) {
+            val updatedLabWork = LabWork(
+                id = labWork.id,
+                name = newLabWork.name,
+                coordinates = newLabWork.coordinates,
+                creationDate = labWork.creationDate,
+                minimalPoint = newLabWork.minimalPoint,
+                personalQualitiesMinimum = newLabWork.personalQualitiesMinimum,
+                difficulty = newLabWork.difficulty,
+                discipline = newLabWork.discipline
+            )
+
+            labWorkQueue.remove(labWork)
+            labWorkQueue.add(updatedLabWork)
+
+            true
+        } else {
+            false
+        }
+    }
 }
-
-
-
-

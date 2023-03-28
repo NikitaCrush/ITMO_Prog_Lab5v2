@@ -4,9 +4,13 @@ import data.LabWorkCollection
 
 class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {
-        val id = (args[0] as String).toInt()
-        labWorkCollection.removeById(id)
-        return "Lab work removed successfully."
+        val id = (args[0] as String).toLong()
+        val removed = labWorkCollection.removeById(id)
+        return if (removed) {
+            "Lab work removed successfully."
+        } else {
+            "No lab work found with the provided id."
+        }
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {

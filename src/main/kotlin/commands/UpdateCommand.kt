@@ -3,6 +3,7 @@ package commands
 import data.LabWork
 import data.LabWorkCollection
 import data.Messages
+import utils.LabWorkReader
 import utils.Validator
 
 class UpdateCommand(
@@ -14,10 +15,6 @@ class UpdateCommand(
         val id = args[0] as Long
         val labWork = args[1] as LabWork
 
-        if (!validator.validateLabWork(labWork)) {
-            return Messages.LAB_WORK_INVALID_DATA
-        }
-
         val updated = labWorkCollection.update(id, labWork)
 
         return if (updated) Messages.LAB_WORK_SUCCESS_UPDATE else Messages.LAB_WORK_NOT_FOUND
@@ -27,7 +24,8 @@ class UpdateCommand(
         print("Enter the ID of the lab work to update: ")
         val id = readLineFn().trim().toLong()
 
-        val labWork = validator.validateAndReadLabWork(readLineFn)
+        val labWorkReader = LabWorkReader(readLineFn, validator)
+        val labWork = labWorkReader.readLabWork()
 
         return listOf(id, labWork)
     }

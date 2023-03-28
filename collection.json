@@ -1,5 +1,21 @@
 [
     {
+        "id": 4409734461761289194,
+        "name": "d",
+        "coordinates": {
+            "x": 4,
+            "y": 4.0
+        },
+        "creationDate": "2023-03-28T10:11:04.5883068",
+        "minimalPoint": 4,
+        "personalQualitiesMinimum": 4,
+        "difficulty": null,
+        "discipline": {
+            "name": "f",
+            "selfStudyHours": 11
+        }
+    },
+    {
         "id": 5000096277273819551,
         "name": "fdsd",
         "coordinates": {
@@ -8,22 +24,6 @@
         },
         "creationDate": "2023-03-28T07:59:32.5646298",
         "minimalPoint": 34,
-        "personalQualitiesMinimum": 3,
-        "difficulty": null,
-        "discipline": {
-            "name": "3",
-            "selfStudyHours": 3
-        }
-    },
-    {
-        "id": 5887613606139702493,
-        "name": "f",
-        "coordinates": {
-            "x": 3,
-            "y": 3.0
-        },
-        "creationDate": "2023-03-28T06:54:20.5832932",
-        "minimalPoint": 3,
         "personalQualitiesMinimum": 3,
         "difficulty": null,
         "discipline": {
@@ -45,6 +45,38 @@
         "discipline": {
             "name": "4",
             "selfStudyHours": 4
+        }
+    },
+    {
+        "id": 6235989048046118682,
+        "name": "fv.@8jh",
+        "coordinates": {
+            "x": -3,
+            "y": -3.0
+        },
+        "creationDate": "2023-03-28T09:50:11.0079907",
+        "minimalPoint": 3,
+        "personalQualitiesMinimum": 7,
+        "difficulty": null,
+        "discipline": {
+            "name": "4.@!5789cd",
+            "selfStudyHours": -10
+        }
+    },
+    {
+        "id": 5887613606139702493,
+        "name": "f",
+        "coordinates": {
+            "x": 3,
+            "y": 3.0
+        },
+        "creationDate": "2023-03-28T06:54:20.5832932",
+        "minimalPoint": 3,
+        "personalQualitiesMinimum": 3,
+        "difficulty": null,
+        "discipline": {
+            "name": "3",
+            "selfStudyHours": 3
         }
     }
 ]

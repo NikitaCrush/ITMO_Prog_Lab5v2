@@ -1,6 +1,7 @@
 package commands
 
 import data.*
+import utils.LabWorkReader
 import utils.Validator
 import java.time.LocalDateTime
 
@@ -11,15 +12,13 @@ class AddCommand(
 
     override fun execute(args: List<Any>): String {
         val labWork = args[0] as LabWork
-        if (!validator.validateLabWork(labWork)) {
-            return Messages.LAB_WORK_INVALID_DATA
-        }
         labWorkCollection.add(labWork)
         return Messages.LAB_WORK_SUCCESS_ADD
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {
-        val labWork = validator.validateAndReadLabWork(readLineFn)
+        val labWorkReader = LabWorkReader(readLineFn, validator)
+        val labWork = labWorkReader.readLabWork()
         return listOf(labWork)
     }
 }

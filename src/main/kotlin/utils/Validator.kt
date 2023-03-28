@@ -1,54 +1,67 @@
 package utils
 
+import data.Coordinates
+import data.Discipline
+import data.Difficulty
 import data.LabWork
-import utils.LabWorkReader
+import exeptions.ValidationException
 
 class Validator {
-
-    fun validateLabWorkName(name: String?): Boolean {
-        return name != null && name.isNotBlank()
+    fun validateName(name: String?) {
+        if (name == null || name.isBlank()) {
+            throw ValidationException("Name cannot be empty.")
+        }
     }
 
-    fun validateCoordinatesX(x: Long?): Boolean {
-        return x != null && x <= 608
+    fun validateCoordinates(coordinates: Coordinates?) {
+        if (coordinates == null || coordinates.x > 608) {
+            throw ValidationException("X coordinate value cannot be greater than 608.")
+        }
     }
 
-    fun validateCoordinatesY(y: Double?): Boolean {
-        return y != null
+    fun validateMinimalPoint(minimalPoint: Int?) {
+        if (minimalPoint == null || minimalPoint <= 0) {
+            throw ValidationException("Minimal point value must be greater than 0.")
+        }
     }
 
-    fun validateMinimalPoint(minimalPoint: Int?): Boolean {
-        return minimalPoint != null && minimalPoint > 0
+    fun validatePersonalQualitiesMinimum(personalQualitiesMinimum: Int?) {
+        if (personalQualitiesMinimum == null || personalQualitiesMinimum <= 0) {
+            throw ValidationException("Personal qualities minimum value must be greater than 0.")
+        }
     }
 
-    fun validatePersonalQualitiesMinimum(personalQualitiesMinimum: Int?): Boolean {
-        return personalQualitiesMinimum != null && personalQualitiesMinimum > 0
+    fun validateDifficulty(difficulty: Difficulty?) {
+        // No validation required as the field can be null
     }
 
-    fun validateDisciplineName(name: String?): Boolean {
-        return name != null && name.isNotBlank()
+    fun validateDiscipline(discipline: Discipline?) {
+        if (discipline == null || discipline.name.isBlank()) {
+            throw ValidationException("Discipline name cannot be empty.")
+        }
     }
 
-    fun validateSelfStudyHours(selfStudyHours: Long?): Boolean {
-        return selfStudyHours != null
+    fun validateSelfStudyHours(selfStudyHours: Long?) {
+        if (selfStudyHours == null || selfStudyHours < 1) {
+            throw ValidationException("Self-study hours must be a non-negative value and not 0.")
+        }
     }
+
 
     fun validateLabWork(labWork: LabWork): Boolean {
-        return validateLabWorkName(labWork.name) &&
-                validateCoordinatesX(labWork.coordinates.x) &&
-                validateCoordinatesY(labWork.coordinates.y) &&
-                validateMinimalPoint(labWork.minimalPoint) &&
-                validatePersonalQualitiesMinimum(labWork.personalQualitiesMinimum) &&
-                validateDisciplineName(labWork.discipline.name) &&
-                validateSelfStudyHours(labWork.discipline.selfStudyHours)
+        try {
+            validateName(labWork.name)
+            validateCoordinates(labWork.coordinates)
+            validateMinimalPoint(labWork.minimalPoint)
+            validatePersonalQualitiesMinimum(labWork.personalQualitiesMinimum)
+            validateDifficulty(labWork.difficulty)
+            validateDiscipline(labWork.discipline)
+            validateSelfStudyHours(labWork.discipline.selfStudyHours)
+        } catch (e: ValidationException) {
+            throw IllegalArgumentException("Invalid lab work data: ${e.message}")
+        }
+        return true
     }
 
-    fun validateAndReadLabWork(readLineFn: () -> String): LabWork {
-        val labWorkReader = LabWorkReader(readLineFn)
-        val labWork = labWorkReader.readLabWork()
-        if (!validateLabWork(labWork)) {
-            throw IllegalArgumentException("Invalid lab work data")
-        }
-        return labWork
-    }
+
 }

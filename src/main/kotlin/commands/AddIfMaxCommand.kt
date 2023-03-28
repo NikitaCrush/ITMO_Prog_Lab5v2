@@ -3,6 +3,7 @@ package commands
 import data.LabWork
 import data.LabWorkCollection
 import data.Messages
+import utils.LabWorkReader
 import utils.Validator
 
 class AddIfMaxCommand(
@@ -17,7 +18,8 @@ class AddIfMaxCommand(
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {
-        val labWork = validator.validateAndReadLabWork(readLineFn)
+        val labWorkReader = LabWorkReader(readLineFn, validator)
+        val labWork = labWorkReader.readLabWork()
         return listOf(labWork)
     }
 }

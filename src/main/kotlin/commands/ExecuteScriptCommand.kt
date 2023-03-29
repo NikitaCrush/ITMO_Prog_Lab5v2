@@ -12,7 +12,6 @@ class ExecuteScriptCommand(
 ) : Command {
     private val maxNestedLevel = 3
 
-    // Add this copy function
     fun copy(nestedLevel: Int): ExecuteScriptCommand {
         return ExecuteScriptCommand(commandParser, printer, nestedLevel)
     }
@@ -30,9 +29,11 @@ class ExecuteScriptCommand(
                 throw FileNotFoundException("File not found: $fileName")
             }
 
-            file.forEachLine { line ->
+            val lines = file.readLines().iterator()
+            while (lines.hasNext()) {
+                val line = lines.next().trim()
                 if (line.isNotBlank()) {
-                    val commandResult = commandParser.parseAndExecute(line, nestedLevel + 1) // Pass the nested level
+                    val commandResult = commandParser.parseAndExecute(line, nestedLevel + 1, lines::next) // Pass the nested level and input function
                     if (commandResult != null) {
                         printer.println(commandResult)
                     }
@@ -45,9 +46,10 @@ class ExecuteScriptCommand(
     }
 
 
-    override fun readArguments(input: () -> String): List<Any> { // Change the function signature
-        printer.print("Enter script file name: ") // Use printer.print instead of print
-        val fileName = input() // Use input() instead of readLineFn()
-        return listOf(fileName)
+        override fun readArguments(input: () -> String): List<Any> { // Change the function signature
+            printer.print("Enter script file name: ") // Use printer.print instead of print
+            val fileName = input() // Use input() instead of readLineFn()
+            return listOf(fileName)
+        }
+
     }
-}

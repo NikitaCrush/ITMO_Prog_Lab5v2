@@ -5,13 +5,13 @@ import exeptions.CommandException
 
 class CommandParser(private val commandExecutor: CommandExecutor) {
 
-    fun parseAndExecute(commandLine: String, nestedLevel: Int = 0): String? {
+    fun parseAndExecute(commandLine: String, nestedLevel: Int = 0, input: (() -> String)? = null): String? {
         val commandParts = commandLine.split(" ", limit = 2)
         val commandName = commandParts[0]
 
         val command = commandExecutor.getCommand(commandName)
             ?: throw CommandException("Unknown command: $commandName")
-        val args = readArguments(command)
+        val args = readArguments(command, input)
 
         // Pass the nestedLevel when executing the command
         return if (command is commands.ExecuteScriptCommand) {
@@ -21,7 +21,7 @@ class CommandParser(private val commandExecutor: CommandExecutor) {
         }
     }
 
-    private fun readArguments(command: Command): List<Any> {
-        return command.readArguments { readLine() ?: "" }
+    private fun readArguments(command: Command, input: (() -> String)?): List<Any> {
+        return command.readArguments(input ?: { readLine() ?: "" })
     }
 }

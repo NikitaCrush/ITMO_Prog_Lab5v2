@@ -1,7 +1,7 @@
 package commands
 
 import data.LabWork
-import data.LabWorkCollection
+import utils.LabWorkCollection
 import data.Messages
 import utils.LabWorkReader
 import utils.Validator

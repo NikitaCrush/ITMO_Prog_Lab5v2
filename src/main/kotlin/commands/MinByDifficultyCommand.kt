@@ -1,6 +1,6 @@
 package commands
 
-import data.LabWorkCollection
+import utils.LabWorkCollection
 
 class MinByDifficultyCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {
@@ -8,7 +8,6 @@ class MinByDifficultyCommand(private val labWorkCollection: LabWorkCollection) :
     }
 
     override fun readArguments(readLineFn: () -> String): List<String> {
-        // No arguments required
         return emptyList()
     }
 }

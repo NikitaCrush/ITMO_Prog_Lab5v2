@@ -1,6 +1,6 @@
 package commands
 
-import data.LabWorkCollection
+import utils.LabWorkCollection
 import data.Messages
 
 class SaveCommand(private val labWorkCollection: LabWorkCollection) : Command {

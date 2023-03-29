@@ -1,7 +1,6 @@
 package utils
 
 import commands.*
-import data.LabWorkCollection
 
 
 class CommandExecutor(private val labWorkCollection: LabWorkCollection, private val printer: Printer) {

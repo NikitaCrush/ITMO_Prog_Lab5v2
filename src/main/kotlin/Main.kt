@@ -1,4 +1,4 @@
-import data.LabWorkCollection
+import utils.LabWorkCollection
 import data.Messages
 import exeptions.*
 import utils.CommandExecutor

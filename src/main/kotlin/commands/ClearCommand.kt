@@ -1,6 +1,6 @@
 package commands
 
-import data.LabWorkCollection
+import utils.LabWorkCollection
 import data.Messages
 
 class ClearCommand(private val labWorkCollection: LabWorkCollection) : Command {

@@ -1,16 +1,10 @@
-package data
+package utils
 
-import java.io.File
+import data.Difficulty
+import data.LabWork
 import java.time.LocalDate
 import java.util.PriorityQueue
 import kotlinx.serialization.builtins.ListSerializer
-import utils.JsonUtil
-import kotlinx.serialization.serializer
-
-
-
-
-
 
 class LabWorkCollection private constructor(val fileName: String) {
     private val labWorkQueue = PriorityQueue<LabWork>()

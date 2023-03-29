@@ -1,5 +1,6 @@
 package commands
 
+import data.Messages
 import utils.CommandParser
 import utils.Printer
 import java.io.File
@@ -26,7 +27,7 @@ class ExecuteScriptCommand(
 
         return try {
             if (!file.exists()) {
-                throw FileNotFoundException("File not found: $fileName")
+                throw FileNotFoundException(Messages.FILE_NOT_FOUND+"$fileName")
             }
 
             val lines = file.readLines().iterator()
@@ -39,7 +40,7 @@ class ExecuteScriptCommand(
                     }
                 }
             }
-            "Script executed successfully."
+            Messages.SCRIPT_EXECUTED_SUCCESS
         } catch (e: FileNotFoundException) {
             "Error: ${e.message}"
         }
@@ -47,7 +48,7 @@ class ExecuteScriptCommand(
 
 
         override fun readArguments(input: () -> String): List<Any> { // Change the function signature
-            printer.print("Enter script file name: ") // Use printer.print instead of print
+            printer.print(Messages.ENTER_SCRIPT_FILE_NAME)// Use printer.print instead of print
             val fileName = input() // Use input() instead of readLineFn()
             return listOf(fileName)
         }

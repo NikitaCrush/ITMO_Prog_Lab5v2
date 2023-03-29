@@ -1,9 +1,6 @@
 package utils
 
-import data.Coordinates
-import data.Difficulty
-import data.Discipline
-import data.LabWork
+import data.*
 import exeptions.ValidationException
 import java.time.LocalDateTime
 
@@ -11,7 +8,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
 
     fun readName(): String {
         while (true) {
-            print("Enter name: ")
+            print(Messages.ENTER_NAME)
             val name = readLineFn()
             try {
                 validator.validateName(name)
@@ -25,15 +22,15 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
     fun readCoordinates(): Coordinates {
         while (true) {
             try {
-                print("Enter coordinates x (Long): ")
+                print(Messages.ENTER_X)
                 val x = readLineFn().trim().toLong()
-                print("Enter coordinates y (Double): ")
+                print(Messages.ENTER_Y)
                 val y = readLineFn().trim().toDouble()
                 val coordinates = Coordinates(x, y)
                 validator.validateCoordinates(coordinates)
                 return coordinates
             } catch (e: NumberFormatException) {
-                println("Invalid input. Please enter valid coordinates.")
+                println(Messages.INVALID_COORDINATES)
             } catch (e: ValidationException) {
                 println(e.message)
             }
@@ -42,13 +39,13 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
 
 
     fun readMinimalPoint(): Int {
-        return readInt("Enter minimalPoint: ", readLineFn, validator::validateMinimalPoint)
+        return readInt(Messages.ENTER_MINIMAL_POINT, readLineFn, validator::validateMinimalPoint)
     }
 
 
 
     fun readDifficulty(): Difficulty? {
-        print("Enter difficulty (EASY, NORMAL, TERRIBLE) or leave it empty for null: ")
+        print(Messages.ENTER_DIFFICULTY)
         while (true) {
             val input = readLineFn().trim()
             if (input.isEmpty()) {
@@ -58,7 +55,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
             return try {
                 Difficulty.valueOf(input.toUpperCase())
             } catch (e: IllegalArgumentException) {
-                println("Invalid input. Please enter a valid difficulty (EASY, NORMAL, TERRIBLE) or leave it empty.")
+                println(Messages.INVALID_DIFFICULTY)
                 continue
             }
         }
@@ -68,7 +65,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
     fun readDiscipline(): Discipline {
         while (true) {
             try {
-                print("Enter discipline (name selfStudyHours(Long)): ")
+                print(Messages.ENTER_DISCIPLINE)
                 val disciplineInput = readLineFn().split(" ").map { it.trim() }
                 val disciplineName = disciplineInput[0]
                 val selfStudyHours = readSelfStudyHours()
@@ -77,7 +74,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
                 validator.validateSelfStudyHours(selfStudyHours)
                 return discipline
             } catch (e: Exception) {
-                println("Invalid input. Please enter a valid discipline (name selfStudyHours(Long)).")
+                println(Messages.INVALID_DISCIPLINE)
             } catch (e: ValidationException) {
                 println(e.message)
             }
@@ -108,7 +105,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
     }
 
     private fun readPersonalQualitiesMinimum(): Int {
-        return readInt("Enter personalQualitiesMinimum: ", readLineFn, validator::validatePersonalQualitiesMinimum)
+        return readInt(Messages.ENTER_PERSONAL_QUALITIES_MIN, readLineFn, validator::validatePersonalQualitiesMinimum)
     }
 
     private fun readInt(prompt: String, readLineFn: () -> String, validation: (Int) -> Unit): Int {
@@ -133,14 +130,14 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
                 validation(value)
                 return value
             } catch (e: NumberFormatException) {
-                println("Invalid input. Please enter a valid number.")
+                println(Messages.INVALID_NUMBER)
             } catch (e: ValidationException) {
                 println(e.message)
             }
         }
     }
     fun readSelfStudyHours(): Long {
-        return readLong("Enter selfStudyHours: ", readLineFn, validator::validateSelfStudyHours)
+        return readLong(Messages.ENTER_SELF_STUDY_HOURS, readLineFn, validator::validateSelfStudyHours)
     }
 
 

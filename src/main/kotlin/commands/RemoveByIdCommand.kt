@@ -1,6 +1,6 @@
 package commands
 
-import data.LabWorkCollection
+import utils.LabWorkCollection
 
 class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {

@@ -1,3 +1,20 @@
+.gradle
+build
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+gradle.properties
+gradlew
+gradlew.bat
+TODO list
+src/main/kotlin/deprecated
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 .DS_Store
 .idea/shelf
 /confluence/target
@@ -10,7 +27,7 @@
 /ideaSDK
 /clionSDK
 /android-studio/sdk
-out/
+
 /tmp
 /intellij
 workspace.xml
@@ -24,7 +41,7 @@ workspace.xml
 build/
 !**/src/**/build
 !**/test/**/build
-*.iml
+
 !**/testData/**/*.iml
 .idea/remote-targets.xml
 .idea/libraries/Gradle*.xml

@@ -40,6 +40,6 @@ class UpdateCommand(
 
     override fun readArguments(input: () -> String): List<Any> {
         val inputString = input()
-        return listOf(inputString)
+        return listOf(inputString.trim())
     }
 }

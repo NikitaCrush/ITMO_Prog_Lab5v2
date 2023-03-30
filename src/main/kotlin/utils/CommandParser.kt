@@ -16,7 +16,8 @@ class CommandParser(private val commandExecutor: CommandExecutor) {
             return "There is no file name"
         }
 
-        val args = readArguments(command, input, commandParts.getOrElse(1) { "" })
+        val initialArg = commandParts.getOrElse(1) { "" }
+        val args = readArguments(command, input, initialArg)
         return when {
             command is commands.ExecuteScriptCommand -> {
                 command.copy(nestedLevel = nestedLevel).execute(args)
@@ -28,14 +29,13 @@ class CommandParser(private val commandExecutor: CommandExecutor) {
         }
     }
 
-    // CommandParser.kt
     private fun readArguments(command: Command, input: (() -> String)?, initialArg: String): List<Any> {
         return when (command) {
             is commands.AddCommand, is commands.AddIfMaxCommand -> {
                 command.readArguments(input ?: { readlnOrNull() ?: "" })
             }
             is commands.UpdateCommand -> {
-                command.readArguments(input ?: { readlnOrNull() ?: "" })
+                command.readArguments { initialArg }
             }
             else -> {
                 command.readArguments { initialArg }

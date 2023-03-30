@@ -4,7 +4,7 @@ import utils.LabWorkCollection
 
 class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {
-        val id = (args[0] as String).toLong()
+        val id = args[0] as Long
         val removed = labWorkCollection.removeById(id)
         return if (removed) {
             "Lab work removed successfully."
@@ -14,8 +14,8 @@ class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Comm
     }
 
     override fun readArguments(readLineFn: () -> String): List<Any> {
-        print("Enter id: ")
-        val id = readLineFn()
+        val idStr = readLineFn()
+        val id = idStr.toLongOrNull() ?: throw IllegalArgumentException("Invalid ID")
         return listOf(id)
     }
 }

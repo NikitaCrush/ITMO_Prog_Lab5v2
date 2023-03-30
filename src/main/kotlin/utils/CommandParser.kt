@@ -11,17 +11,36 @@ class CommandParser(private val commandExecutor: CommandExecutor) {
 
         val command = commandExecutor.getCommand(commandName)
             ?: throw CommandException("Unknown command: $commandName")
-        val args = readArguments(command, input)
 
-        // Pass the nestedLevel when executing the command
-        return if (command is commands.ExecuteScriptCommand) {
-            command.copy(nestedLevel = nestedLevel).execute(args)
-        } else {
-            command.execute(args)
+        if (command is commands.ExecuteScriptCommand && commandParts.size == 1) {
+            return "There is no file name"
+        }
+
+        val args = readArguments(command, input, commandParts.getOrElse(1) { "" })
+        return when {
+            command is commands.ExecuteScriptCommand -> {
+                command.copy(nestedLevel = nestedLevel).execute(args)
+            }
+            commandLine.isNotBlank() -> {
+                command.execute(args)
+            }
+            else -> null // Return null if the input is empty (ignores empty lines)
         }
     }
 
-    private fun readArguments(command: Command, input: (() -> String)?): List<Any> {
-        return command.readArguments(input ?: { readLine() ?: "" })
+    // CommandParser.kt
+    private fun readArguments(command: Command, input: (() -> String)?, initialArg: String): List<Any> {
+        return when (command) {
+            is commands.AddCommand, is commands.AddIfMaxCommand -> {
+                command.readArguments(input ?: { readLine() ?: "" })
+            }
+            is commands.UpdateCommand -> {
+                command.readArguments(input ?: { readLine() ?: "" })
+            }
+            else -> {
+                command.readArguments { initialArg }
+            }
+        }
     }
+
 }

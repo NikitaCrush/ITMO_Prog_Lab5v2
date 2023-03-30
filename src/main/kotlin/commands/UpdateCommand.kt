@@ -1,8 +1,9 @@
 package commands
 
 import data.LabWork
+import exeptions.ValidationException
+import utils.CommandParser
 import utils.LabWorkCollection
-import data.Messages
 import utils.LabWorkReader
 import utils.Validator
 
@@ -12,21 +13,35 @@ class UpdateCommand(
 ) : Command {
 
     override fun execute(args: List<Any>): String {
-        val id = args[0] as Long
-        val labWork = args[1] as LabWork
+        if (args.isEmpty() || args[0] !is String) {
+            return "ID is not provided or has an incorrect format."
+        }
 
-        val updated = labWorkCollection.update(id, labWork)
+        val id: Long
+        try {
+            id = args[0].toString().toLong()
+        } catch (e: NumberFormatException) {
+            return "Invalid ID format. Please enter a valid number."
+        }
 
-        return if (updated) Messages.LAB_WORK_SUCCESS_UPDATE else Messages.LAB_WORK_NOT_FOUND
+        val labWorkToUpdate = labWorkCollection.show().find { it.id == id }
+
+        return if (labWorkToUpdate != null) {
+            try {
+                val labWorkReader = LabWorkReader({ readLine() ?: "" }, validator)
+                val updatedLabWork = labWorkReader.readLabWork(id, labWorkToUpdate.creationDate)
+                labWorkCollection.update(id, updatedLabWork)
+                "Lab work with ID: $id has been updated."
+            } catch (e: ValidationException) {
+                "Failed to update lab work due to invalid input: ${e.message}"
+            }
+        } else {
+            "No lab work found with ID: $id."
+        }
     }
 
-    override fun readArguments(readLineFn: () -> String): List<Any> {
-        print("Enter the ID of the lab work to update: ")
-        val id = readLineFn().trim().toLong()
-
-        val labWorkReader = LabWorkReader(readLineFn, validator)
-        val labWork = labWorkReader.readLabWork()
-
-        return listOf(id, labWork)
+    override fun readArguments(input: () -> String): List<Any> {
+        val inputString = input()
+        return listOf(inputString)
     }
 }

@@ -4,6 +4,7 @@ import exeptions.*
 import utils.CommandExecutor
 import utils.CommandParser
 import utils.ConsolePrinter
+import java.io.FileNotFoundException
 
 fun main() {
     // Read the file name from the environment variable
@@ -26,12 +27,11 @@ fun main() {
         try {
             val commandResult = commandParser.parseAndExecute(commandLine)
             commandResult?.let { printer.println(it) }
-
-            if (commandResult == null) {
-                printer.println(commandResult.toString())
-            }
-
         } catch (e: CommandException) {
+            e.message?.let { printer.println(it) }
+        } catch (e: FileNotFoundException) {
+            e.message?.let { printer.println(it) }
+        } catch (e: IllegalArgumentException) {
             e.message?.let { printer.println(it) }
         }
     }

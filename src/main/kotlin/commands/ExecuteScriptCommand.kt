@@ -9,7 +9,7 @@ import java.io.FileNotFoundException
 class ExecuteScriptCommand(
     private val commandParser: CommandParser,
     private val printer: Printer,
-    private val nestedLevel: Int = 5 // Add the nestedLevel parameter
+    private val nestedLevel: Int = 0
 ) : Command {
     private val maxNestedLevel = 3
 
@@ -27,14 +27,14 @@ class ExecuteScriptCommand(
 
         return try {
             if (!file.exists()) {
-                throw FileNotFoundException(Messages.FILE_NOT_FOUND+"$fileName")
+                throw FileNotFoundException(Messages.FILE_NOT_FOUND + "$fileName")
             }
 
             val lines = file.readLines().iterator()
             while (lines.hasNext()) {
                 val line = lines.next().trim()
                 if (line.isNotBlank()) {
-                    val commandResult = commandParser.parseAndExecute(line, nestedLevel + 1, lines::next) // Pass the nested level and input function
+                    val commandResult = commandParser.parseAndExecute(line, nestedLevel + 1, lines::next)
                     if (commandResult != null) {
                         printer.println(commandResult)
                     }
@@ -46,11 +46,22 @@ class ExecuteScriptCommand(
         }
     }
 
-
-        override fun readArguments(input: () -> String): List<Any> { // Change the function signature
-            printer.print(Messages.ENTER_SCRIPT_FILE_NAME)// Use printer.print instead of print
-            val fileName = input() // Use input() instead of readLineFn()
-            return listOf(fileName)
+    override fun readArguments(input: () -> String): List<Any> {
+        val fileName = input()
+        if (fileName.isBlank()) {
+            throw FileNotFoundException("There is no file name")
+        }
+        val file = File(fileName)
+        if (!file.exists()) {
+            throw FileNotFoundException(Messages.FILE_NOT_FOUND + "$fileName")
         }
 
+        val fileParts = fileName.split(" ", limit = 2)
+        if (fileParts.size > 1) {
+            throw IllegalArgumentException("Unexpected argument after the file name: '${fileParts[1]}'")
+        }
+
+        return listOf(fileName)
     }
+
+}

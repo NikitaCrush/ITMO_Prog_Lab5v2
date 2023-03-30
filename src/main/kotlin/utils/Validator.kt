@@ -46,22 +46,4 @@ class Validator {
             throw ValidationException("Self-study hours must be a non-negative value and not 0.")
         }
     }
-
-
-    fun validateLabWork(labWork: LabWork): Boolean {
-        try {
-            validateName(labWork.name)
-            validateCoordinates(labWork.coordinates)
-            validateMinimalPoint(labWork.minimalPoint)
-            validatePersonalQualitiesMinimum(labWork.personalQualitiesMinimum)
-            validateDifficulty(labWork.difficulty)
-            validateDiscipline(labWork.discipline)
-            validateSelfStudyHours(labWork.discipline.selfStudyHours)
-        } catch (e: ValidationException) {
-            throw IllegalArgumentException("Invalid lab work data: ${e.message}")
-        }
-        return true
-    }
-
-
 }

@@ -6,6 +6,13 @@ import utils.Printer
 import java.io.File
 import java.io.FileNotFoundException
 
+/**
+ * The ExecuteScriptCommand class reads and executes commands from the specified file.
+ *
+ * @property commandParser The command parser used to parse and execute commands.
+ * @property printer The printer used to display command results.
+ * @property nestedLevel The current script nesting level (default 0).
+ */
 class ExecuteScriptCommand(
     private val commandParser: CommandParser,
     private val printer: Printer,

@@ -6,6 +6,13 @@ import data.Messages
 import utils.LabWorkReader
 import utils.Validator
 
+/**
+ * The AddIfMaxCommand class adds a new lab work to the collection if its value is greater than the largest
+ * element in the collection.
+ *
+ * @property labWorkCollection The lab work collection to add the lab work to.
+ * @property validator The validator used for input validation.
+ */
 class AddIfMaxCommand(
     private val labWorkCollection: LabWorkCollection,
     private val validator: Validator

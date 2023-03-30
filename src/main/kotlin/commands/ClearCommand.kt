@@ -3,6 +3,11 @@ package commands
 import utils.LabWorkCollection
 import data.Messages
 
+/**
+ * The ClearCommand class clears the lab work collection.
+ *
+ * @property labWorkCollection The lab work collection to be cleared.
+ */
 class ClearCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {
         labWorkCollection.clear()

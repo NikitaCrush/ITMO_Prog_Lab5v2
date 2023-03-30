@@ -2,6 +2,11 @@ package commands
 
 import utils.CommandExecutor
 
+/**
+ * The HelpCommand class displays help information for all available commands.
+ *
+ * @property commandExecutor The command executor used to get the list of available commands.
+ */
 class HelpCommand(private val commandExecutor: CommandExecutor) : Command {
     private val commandDescriptions = mapOf(
         "help" to "help : print help for available commands",

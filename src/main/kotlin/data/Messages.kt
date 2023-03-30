@@ -1,5 +1,8 @@
 package data
 
+/**
+ * An object that holds constant message strings for user prompts and errors.
+ */
 object Messages {
 //    const val UNKNOWN_COMMAND = "Unknown command. Enter 'help' for the list of available commands."
 //    const val ERROR_EXECUTING_COMMAND = "Error executing command: %s"

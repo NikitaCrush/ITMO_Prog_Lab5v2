@@ -6,6 +6,11 @@ import utils.CommandParser
 import utils.ConsolePrinter
 import java.io.FileNotFoundException
 
+
+/**
+ * The main function of the program, responsible for setting up the environment and executing commands.
+ * Reads the file name from the environment variable LAB_WORK_FILE, otherwise uses "collection.json" as the default file name.
+ */
 fun main() {
     // Read the file name from the environment variable
     val fileName = System.getenv("LAB_WORK_FILE") ?: "collection.json"
@@ -22,7 +27,7 @@ fun main() {
 
     while (true) {
         printer.print("> ")
-        val commandLine = readLine() ?: break
+        val commandLine = readlnOrNull() ?: break
 
         try {
             val commandResult = commandParser.parseAndExecute(commandLine)

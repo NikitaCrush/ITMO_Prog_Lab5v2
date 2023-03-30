@@ -5,6 +5,13 @@ import utils.LabWorkCollection
 import utils.LabWorkReader
 import utils.Validator
 
+/**
+ * The UpdateCommand class is responsible for updating a specific lab work in the collection
+ * by providing a valid ID.
+ *
+ * @property labWorkCollection The lab work collection to be updated.
+ * @property validator The validator used for input validation.
+ */
 class UpdateCommand(
     private val labWorkCollection: LabWorkCollection,
     private val validator: Validator

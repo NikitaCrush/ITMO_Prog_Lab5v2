@@ -3,6 +3,11 @@ package commands
 import utils.LabWorkCollection
 import data.Messages
 
+/**
+ * The SaveCommand class saves the lab work collection to a file.
+ *
+ * @property labWorkCollection The lab work collection to be saved.
+ */
 class SaveCommand(private val labWorkCollection: LabWorkCollection) : Command {
     override fun execute(args: List<Any>): String {
         labWorkCollection.saveToFile()

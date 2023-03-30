@@ -7,7 +7,7 @@ class PrintUniqueMinimalPointCommand(private val labWorkCollection: LabWorkColle
         return labWorkCollection.printUniqueMinimalPoint().joinToString("\n")
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         // No arguments required
         return emptyList()
     }

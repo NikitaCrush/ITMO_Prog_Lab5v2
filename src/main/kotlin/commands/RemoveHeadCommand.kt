@@ -7,7 +7,7 @@ class RemoveHeadCommand(private val labWorkCollection: LabWorkCollection) : Comm
         return labWorkCollection.removeHead().toString()
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

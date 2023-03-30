@@ -16,8 +16,8 @@ class AddCommand(
         return Messages.LAB_WORK_SUCCESS_ADD
     }
 
-    override fun readArguments(readLineFn: () -> String): List<Any> {
-        val labWorkReader = LabWorkReader(readLineFn, validator)
+    override fun readArguments(input: () -> String): List<Any> {
+        val labWorkReader = LabWorkReader(input, validator)
         val labWork = labWorkReader.readLabWork()
         return listOf(labWork)
     }

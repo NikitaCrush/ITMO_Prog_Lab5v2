@@ -9,7 +9,7 @@ class SaveCommand(private val labWorkCollection: LabWorkCollection) : Command {
         return Messages.LAB_WORK_SUCCESS_SAVE
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

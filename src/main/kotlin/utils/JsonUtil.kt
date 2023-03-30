@@ -10,7 +10,7 @@ object JsonUtil {
         prettyPrint = true // Add this line to enable pretty-printing
     }
 
-    fun <T> fromJson(jsonString: String, serializer: KSerializer<T>): T? {
+    private fun <T> fromJson(jsonString: String, serializer: KSerializer<T>): T? {
         return try {
             json.decodeFromString(serializer, jsonString)
         } catch (e: Exception) {
@@ -18,9 +18,9 @@ object JsonUtil {
         }
     }
 
-    fun <T> toJson(obj: T, serializer: KSerializer<T>): String {
-        return json.encodeToString(serializer, obj)
-    }
+//    fun <T> toJson(obj: T, serializer: KSerializer<T>): String {
+//        return json.encodeToString(serializer, obj)
+//    }
 
     fun <T> loadFromFile(fileName: String, serializer: KSerializer<T>): T? {
         return try {

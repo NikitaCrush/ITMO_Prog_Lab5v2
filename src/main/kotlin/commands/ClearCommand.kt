@@ -9,7 +9,7 @@ class ClearCommand(private val labWorkCollection: LabWorkCollection) : Command {
         return Messages.LAB_WORK_SUCCESS_CLEAR
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

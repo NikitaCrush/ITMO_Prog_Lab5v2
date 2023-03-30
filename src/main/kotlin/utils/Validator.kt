@@ -2,13 +2,12 @@ package utils
 
 import data.Coordinates
 import data.Discipline
-import data.Difficulty
-import data.LabWork
+//import data.Difficulty
 import exeptions.ValidationException
 
 class Validator {
     fun validateName(name: String?) {
-        if (name == null || name.isBlank()) {
+        if (name.isNullOrBlank()) {
             throw ValidationException("Name cannot be empty.")
         }
     }
@@ -31,9 +30,9 @@ class Validator {
         }
     }
 
-    fun validateDifficulty(difficulty: Difficulty?) {
-        // No validation required as the field can be null
-    }
+//    fun validateDifficulty(difficulty: Difficulty?) {
+//        // No validation required as the field can be null
+//    }
 
     fun validateDiscipline(discipline: Discipline?) {
         if (discipline == null || discipline.name.isBlank()) {

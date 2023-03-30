@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.util.PriorityQueue
 import kotlinx.serialization.builtins.ListSerializer
 
-class LabWorkCollection private constructor(val fileName: String) {
+class LabWorkCollection private constructor(private val fileName: String) {
     private val labWorkQueue = PriorityQueue<LabWork>()
 
     init {
@@ -15,7 +15,7 @@ class LabWorkCollection private constructor(val fileName: String) {
 
     private fun loadFromFile() {
         try {
-            val labWorkList = JsonUtil.loadFromFile<List<LabWork>>(fileName, ListSerializer(LabWork.serializer()))
+            val labWorkList = JsonUtil.loadFromFile(fileName, ListSerializer(LabWork.serializer()))
             labWorkList?.let { labWorkQueue.addAll(it) }
         } catch (e: kotlinx.serialization.SerializationException) {
             println("Error: Failed to load data from file. The file might be empty or contain invalid content. Starting with an empty collection.")
@@ -58,11 +58,11 @@ class LabWorkCollection private constructor(val fileName: String) {
         return labWorkQueue.toList()
     }
 
-    fun size(): Int {
+    private fun size(): Int {
         return labWorkQueue.size
     }
 
-    fun getCreationDate(): LocalDate {
+    private fun getCreationDate(): LocalDate {
         return LocalDate.now()
     }
 

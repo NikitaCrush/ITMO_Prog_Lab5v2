@@ -3,10 +3,11 @@ package utils
 import data.*
 import exeptions.ValidationException
 import java.time.LocalDateTime
+import java.util.*
 
 class LabWorkReader(private val readLineFn: () -> String, private val validator: Validator) {
 
-    fun readName(): String {
+    private fun readName(): String {
         while (true) {
             print(Messages.ENTER_NAME)
             val name = readLineFn()
@@ -19,7 +20,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
         }
     }
 
-    fun readCoordinates(): Coordinates {
+    private fun readCoordinates(): Coordinates {
         while (true) {
             try {
                 print(Messages.ENTER_X)
@@ -38,13 +39,13 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
     }
 
 
-    fun readMinimalPoint(): Int {
+    private fun readMinimalPoint(): Int {
         return readInt(Messages.ENTER_MINIMAL_POINT, readLineFn, validator::validateMinimalPoint)
     }
 
 
 
-    fun readDifficulty(): Difficulty? {
+    private fun readDifficulty(): Difficulty? {
         print(Messages.ENTER_DIFFICULTY)
         while (true) {
             val input = readLineFn().trim()
@@ -53,7 +54,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
             }
 
             return try {
-                Difficulty.valueOf(input.toUpperCase())
+                Difficulty.valueOf(input.uppercase(Locale.getDefault()))
             } catch (e: IllegalArgumentException) {
                 println(Messages.INVALID_DIFFICULTY)
                 continue
@@ -62,7 +63,7 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
     }
 
 
-    fun readDiscipline(): Discipline {
+    private fun readDiscipline(): Discipline {
         while (true) {
             try {
                 print(Messages.ENTER_DISCIPLINE)
@@ -122,10 +123,10 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
             }
         }
     }
-    private fun readLong(prompt: String, readLineFn: () -> String, validation: (Long) -> Unit): Long {
+    private fun readLong(readLineFn: () -> String, validation: (Long) -> Unit): Long {
         while (true) {
             try {
-                print(prompt)
+                print(Messages.ENTER_SELF_STUDY_HOURS)
                 val value = readLineFn().toLong()
                 validation(value)
                 return value
@@ -136,8 +137,8 @@ class LabWorkReader(private val readLineFn: () -> String, private val validator:
             }
         }
     }
-    fun readSelfStudyHours(): Long {
-        return readLong(Messages.ENTER_SELF_STUDY_HOURS, readLineFn, validator::validateSelfStudyHours)
+    private fun readSelfStudyHours(): Long {
+        return readLong(readLineFn, validator::validateSelfStudyHours)
     }
 
 

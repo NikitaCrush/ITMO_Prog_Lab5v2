@@ -13,8 +13,8 @@ class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Comm
         }
     }
 
-    override fun readArguments(readLineFn: () -> String): List<Any> {
-        val idStr = readLineFn()
+    override fun readArguments(input: () -> String): List<Any> {
+        val idStr = input()
         val id = idStr.toLongOrNull() ?: throw IllegalArgumentException("Invalid ID")
         return listOf(id)
     }

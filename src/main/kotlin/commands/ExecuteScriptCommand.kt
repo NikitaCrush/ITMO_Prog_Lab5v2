@@ -27,7 +27,7 @@ class ExecuteScriptCommand(
 
         return try {
             if (!file.exists()) {
-                throw FileNotFoundException(Messages.FILE_NOT_FOUND + "$fileName")
+                throw FileNotFoundException(Messages.FILE_NOT_FOUND + fileName)
             }
 
             val lines = file.readLines().iterator()
@@ -53,7 +53,7 @@ class ExecuteScriptCommand(
         }
         val file = File(fileName)
         if (!file.exists()) {
-            throw FileNotFoundException(Messages.FILE_NOT_FOUND + "$fileName")
+            throw FileNotFoundException(Messages.FILE_NOT_FOUND + fileName)
         }
 
         val fileParts = fileName.split(" ", limit = 2)

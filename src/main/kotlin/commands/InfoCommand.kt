@@ -7,7 +7,7 @@ class InfoCommand(private val labWorkCollection: LabWorkCollection) : Command {
         return labWorkCollection.getInfo()
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

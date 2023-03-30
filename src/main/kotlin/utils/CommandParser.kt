@@ -32,10 +32,10 @@ class CommandParser(private val commandExecutor: CommandExecutor) {
     private fun readArguments(command: Command, input: (() -> String)?, initialArg: String): List<Any> {
         return when (command) {
             is commands.AddCommand, is commands.AddIfMaxCommand -> {
-                command.readArguments(input ?: { readLine() ?: "" })
+                command.readArguments(input ?: { readlnOrNull() ?: "" })
             }
             is commands.UpdateCommand -> {
-                command.readArguments(input ?: { readLine() ?: "" })
+                command.readArguments(input ?: { readlnOrNull() ?: "" })
             }
             else -> {
                 command.readArguments { initialArg }

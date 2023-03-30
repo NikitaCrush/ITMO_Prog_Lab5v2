@@ -6,7 +6,7 @@ class SumOfMinimalPointCommand(private val labWorkCollection: LabWorkCollection)
     override fun execute(args: List<Any>): String {
         return labWorkCollection.sumOfMinimalPoint().toString()
     }
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

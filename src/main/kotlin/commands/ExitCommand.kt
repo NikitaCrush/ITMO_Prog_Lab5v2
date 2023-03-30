@@ -1,14 +1,13 @@
 package commands
 
-import data.Messages
+import kotlin.system.exitProcess
 
 class ExitCommand : Command {
     override fun execute(args: List<Any>): String {
-        System.exit(0)
-        return Messages.VOID
+        exitProcess(0)
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

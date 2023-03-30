@@ -7,7 +7,7 @@ class MinByDifficultyCommand(private val labWorkCollection: LabWorkCollection) :
         return labWorkCollection.minByDifficulty().toString()
     }
 
-    override fun readArguments(readLineFn: () -> String): List<String> {
+    override fun readArguments(input: () -> String): List<String> {
         return emptyList()
     }
 }

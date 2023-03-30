@@ -1,8 +1,6 @@
 package commands
 
-import data.LabWork
 import exeptions.ValidationException
-import utils.CommandParser
 import utils.LabWorkCollection
 import utils.LabWorkReader
 import utils.Validator
@@ -28,7 +26,7 @@ class UpdateCommand(
 
         return if (labWorkToUpdate != null) {
             try {
-                val labWorkReader = LabWorkReader({ readLine() ?: "" }, validator)
+                val labWorkReader = LabWorkReader({ readlnOrNull() ?: "" }, validator)
                 val updatedLabWork = labWorkReader.readLabWork(id, labWorkToUpdate.creationDate)
                 labWorkCollection.update(id, updatedLabWork)
                 "Lab work with ID: $id has been updated."

@@ -1,9 +1,10 @@
 package utils
 
 import commands.*
+import java.util.*
 
 
-class CommandExecutor(private val labWorkCollection: LabWorkCollection, private val printer: Printer) {
+class CommandExecutor(labWorkCollection: LabWorkCollection, printer: Printer) {
 
     private val validator = Validator()
     private val commandMap: MutableMap<String, Command> = mutableMapOf()
@@ -30,7 +31,7 @@ class CommandExecutor(private val labWorkCollection: LabWorkCollection, private 
 
 
     fun getCommand(name: String): Command? {
-        return commandMap[name.toLowerCase()]
+        return commandMap[name.lowercase(Locale.getDefault())]
     }
 
 

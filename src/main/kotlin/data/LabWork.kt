@@ -2,7 +2,6 @@ package data
 
 import java.time.LocalDateTime
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.serializer
 import utils.LocalDateTimeSerializer
 
 

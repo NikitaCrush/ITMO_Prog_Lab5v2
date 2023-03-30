@@ -17,26 +17,22 @@ class ExecuteScriptCommand(
     private val commandParser: CommandParser,
     private val printer: Printer,
     private val nestedLevel: Int = 0
-) : Command {
-    private val maxNestedLevel = 3
+) : Command() {
 
     fun copy(nestedLevel: Int): ExecuteScriptCommand {
         return ExecuteScriptCommand(commandParser, printer, nestedLevel)
     }
 
     override fun execute(args: List<Any>): String {
-        if (nestedLevel >= maxNestedLevel) {
-            return "Error: Maximum script nesting level ($maxNestedLevel) exceeded. Aborting."
-        }
 
         val fileName = args[0] as String
         val file = File(fileName)
-
+        if(stack.contains(fileName)) return "Error: Recursion"
         return try {
             if (!file.exists()) {
                 throw FileNotFoundException(Messages.FILE_NOT_FOUND + fileName)
             }
-
+            stack.add(fileName)
             val lines = file.readLines().iterator()
             while (lines.hasNext()) {
                 val line = lines.next().trim()
@@ -47,6 +43,7 @@ class ExecuteScriptCommand(
                     }
                 }
             }
+            stack.remove(fileName)
             Messages.SCRIPT_EXECUTED_SUCCESS
         } catch (e: FileNotFoundException) {
             "Error: ${e.message}"

@@ -15,6 +15,7 @@ class LabWorkCollection private constructor(private val fileName: String) {
     private val labWorkQueue = PriorityQueue<LabWork>()
 
     init {
+        System.err.println("LabWorkCollection created")
         loadFromFile()
     }
 

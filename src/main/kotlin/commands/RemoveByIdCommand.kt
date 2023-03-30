@@ -1,13 +1,11 @@
 package commands
 
-import utils.LabWorkCollection
-
 /**
  * The RemoveByIdCommand class removes a lab work from the collection by providing a valid ID.
  *
  * @property labWorkCollection The lab work collection to remove the lab work from.
  */
-class RemoveByIdCommand(private val labWorkCollection: LabWorkCollection) : Command {
+class RemoveByIdCommand() : Command() {
     override fun execute(args: List<Any>): String {
         val id = args[0] as Long
         val removed = labWorkCollection.removeById(id)

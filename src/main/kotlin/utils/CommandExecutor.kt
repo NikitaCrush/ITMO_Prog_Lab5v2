@@ -9,28 +9,26 @@ import java.util.*
  * @property labWorkCollection The [LabWorkCollection] instance to be manipulated by the commands.
  * @property printer The [Printer] instance to output the command results.
  */
-class CommandExecutor(labWorkCollection: LabWorkCollection, printer: Printer) {
-
-    private val validator = Validator()
+class CommandExecutor(printer: Printer) {
     private val commandMap: MutableMap<String, Command> = mutableMapOf()
 
     init {
         commandMap["help"] = HelpCommand(this)
-        commandMap["info"] = InfoCommand(labWorkCollection)
-        commandMap["show"] = ShowCommand(labWorkCollection)
-        commandMap["add"] = AddCommand(labWorkCollection, validator)
-        commandMap["update"] = UpdateCommand(labWorkCollection, validator)
-        commandMap["remove_by_id"] = RemoveByIdCommand(labWorkCollection)
-        commandMap["clear"] = ClearCommand(labWorkCollection)
-        commandMap["save"] = SaveCommand(labWorkCollection)
+        commandMap["info"] = InfoCommand()
+        commandMap["show"] = ShowCommand()
+        commandMap["add"] = AddCommand()
+        commandMap["update"] = UpdateCommand()
+        commandMap["remove_by_id"] = RemoveByIdCommand()
+        commandMap["clear"] = ClearCommand()
+        commandMap["save"] = SaveCommand()
         commandMap["execute_script"] = ExecuteScriptCommand(CommandParser(this), printer)
         commandMap["exit"] = ExitCommand()
-        commandMap["remove_first"] = RemoveFirstCommand(labWorkCollection)
-        commandMap["remove_head"] = RemoveHeadCommand(labWorkCollection)
-        commandMap["add_if_max"] = AddIfMaxCommand(labWorkCollection, validator)
-        commandMap["sum_of_minimal_point"] = SumOfMinimalPointCommand(labWorkCollection)
-        commandMap["min_by_difficulty"] = MinByDifficultyCommand(labWorkCollection)
-        commandMap["print_unique_minimal_point"] = PrintUniqueMinimalPointCommand(labWorkCollection)
+        commandMap["remove_first"] = RemoveFirstCommand()
+        commandMap["remove_head"] = RemoveHeadCommand()
+        commandMap["add_if_max"] = AddIfMaxCommand()
+        commandMap["sum_of_minimal_point"] = SumOfMinimalPointCommand()
+        commandMap["min_by_difficulty"] = MinByDifficultyCommand()
+        commandMap["print_unique_minimal_point"] = PrintUniqueMinimalPointCommand()
     }
 
 

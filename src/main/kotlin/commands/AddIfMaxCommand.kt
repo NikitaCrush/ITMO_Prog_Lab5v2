@@ -1,10 +1,8 @@
 package commands
 
 import data.LabWork
-import utils.LabWorkCollection
 import data.Messages
 import utils.LabWorkReader
-import utils.Validator
 
 /**
  * The AddIfMaxCommand class adds a new lab work to the collection if its value is greater than the largest
@@ -13,10 +11,7 @@ import utils.Validator
  * @property labWorkCollection The lab work collection to add the lab work to.
  * @property validator The validator used for input validation.
  */
-class AddIfMaxCommand(
-    private val labWorkCollection: LabWorkCollection,
-    private val validator: Validator
-) : Command {
+class AddIfMaxCommand() : Command() {
 
     override fun execute(args: List<Any>): String {
         val labWork = args[0] as LabWork

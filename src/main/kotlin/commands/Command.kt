@@ -1,9 +1,18 @@
 package commands
 
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import utils.LabWorkCollection
+import utils.Validator
+import java.util.*
+
 /**
  * The Command interface represents a command that can be executed.
  */
-interface Command {
-    fun execute(args: List<Any>): String
-    fun readArguments(input: () -> String): List<Any>
+abstract class Command: KoinComponent {
+    val stack: Stack<String> by inject()
+    val validator: Validator by inject()
+    val labWorkCollection: LabWorkCollection by inject()
+    abstract fun execute(args: List<Any>): String
+    abstract fun readArguments(input: () -> String): List<Any>
 }

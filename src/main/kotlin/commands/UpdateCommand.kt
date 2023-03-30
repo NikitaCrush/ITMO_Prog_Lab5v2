@@ -1,9 +1,7 @@
 package commands
 
 import exeptions.ValidationException
-import utils.LabWorkCollection
 import utils.LabWorkReader
-import utils.Validator
 
 /**
  * The UpdateCommand class is responsible for updating a specific lab work in the collection
@@ -12,10 +10,7 @@ import utils.Validator
  * @property labWorkCollection The lab work collection to be updated.
  * @property validator The validator used for input validation.
  */
-class UpdateCommand(
-    private val labWorkCollection: LabWorkCollection,
-    private val validator: Validator
-) : Command {
+class UpdateCommand() : Command() {
 
     override fun execute(args: List<Any>): String {
         if (args.isEmpty() || args[0] !is String) {

@@ -1,25 +1,36 @@
-import utils.LabWorkCollection
 import data.Messages
 import exeptions.*
-import utils.CommandExecutor
-import utils.CommandParser
-import utils.ConsolePrinter
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
+import utils.*
 import java.io.FileNotFoundException
+import java.util.*
 
+val koinModule = module {
+    single { Stack<String>() }
+    single { Validator() }
+    single {
+        val fileName = System.getenv("LAB_WORK_FILE") ?: "collection.json"
+        LabWorkCollection.fromFile(fileName)
+    }
+}
 
 /**
  * The main function of the program, responsible for setting up the environment and executing commands.
  * Reads the file name from the environment variable LAB_WORK_FILE, otherwise uses "collection.json" as the default file name.
  */
 fun main() {
+    startKoin {
+        modules(koinModule)
+    }
     // Read the file name from the environment variable
-    val fileName = System.getenv("LAB_WORK_FILE") ?: "collection.json"
+    //val fileName = System.getenv("LAB_WORK_FILE") ?: "collection.json"
 
     // Create and populate the LabWork collection
-    val labWorkCollection = LabWorkCollection.fromFile(fileName)
+    //val labWorkCollection = LabWorkCollection.fromFile(fileName)
 
     val printer = ConsolePrinter()
-    val commandExecutor = CommandExecutor(labWorkCollection, printer)
+    val commandExecutor = CommandExecutor(printer)
     val commandParser = CommandParser(commandExecutor)
 
     printer.println(Messages.WELCOME)

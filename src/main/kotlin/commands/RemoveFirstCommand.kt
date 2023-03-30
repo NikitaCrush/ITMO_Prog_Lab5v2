@@ -1,13 +1,11 @@
 package commands
 
-import utils.LabWorkCollection
-
 /**
  * The RemoveFirstCommand class removes the first element in the lab work collection.
  *
  * @property labWorkCollection The lab work collection to remove the first element from.
  */
-class RemoveFirstCommand(private val labWorkCollection: LabWorkCollection) : Command {
+class RemoveFirstCommand() : Command() {
     override fun execute(args: List<Any>): String {
         labWorkCollection.removeFirst()
         return "First element removed successfully."

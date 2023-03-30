@@ -7,7 +7,7 @@ import utils.CommandExecutor
  *
  * @property commandExecutor The command executor used to get the list of available commands.
  */
-class HelpCommand(private val commandExecutor: CommandExecutor) : Command {
+class HelpCommand(private val commandExecutor: CommandExecutor) : Command() {
     private val commandDescriptions = mapOf(
         "help" to "help : print help for available commands",
         "info" to "info : print information about the collection (type, initialization date, number of items, etc.) in the standard output.",

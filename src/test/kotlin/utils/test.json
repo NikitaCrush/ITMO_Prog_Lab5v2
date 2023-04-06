@@ -1,0 +1,34 @@
+[
+    {
+        "id": 15,
+        "name": "Test2 LabWork",
+        "coordinates": {
+            "x": 564,
+            "y": 34.6
+        },
+        "creationDate": "2023-04-06T23:33:00.2776291",
+        "minimalPoint": 11,
+        "personalQualitiesMinimum": 17,
+        "difficulty": "EASY",
+        "discipline": {
+            "name": "sport",
+            "selfStudyHours": 12
+        }
+    },
+    {
+        "id": 1,
+        "name": "Test LabWork",
+        "coordinates": {
+            "x": 1,
+            "y": 2.0
+        },
+        "creationDate": "2023-04-06T23:33:00.2776291",
+        "minimalPoint": 10,
+        "personalQualitiesMinimum": 5,
+        "difficulty": "NORMAL",
+        "discipline": {
+            "name": "sport",
+            "selfStudyHours": 12
+        }
+    }
+]

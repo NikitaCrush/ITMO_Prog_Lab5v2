@@ -11,7 +11,7 @@ import kotlinx.serialization.builtins.ListSerializer
  *
  * @property fileName The file name to use for loading and saving the LabWork collection.
  */
-class LabWorkCollection private constructor(private val fileName: String) {
+class LabWorkCollection(private val fileName: String) {
     private val labWorkQueue = PriorityQueue<LabWork>()
 
     init {
@@ -97,7 +97,7 @@ class LabWorkCollection private constructor(private val fileName: String) {
      *
      * @return The size of the collection.
      */
-    private fun size(): Int {
+    public fun size(): Int {
         return labWorkQueue.size
     }
 

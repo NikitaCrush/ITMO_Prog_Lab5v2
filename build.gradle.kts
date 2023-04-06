@@ -18,6 +18,14 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.insert-koin:koin-core:3.3.3")
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("io.mockk:mockk:1.12.4")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks {
@@ -46,5 +54,8 @@ tasks {
 
     withType<ShadowJar> {
         archiveClassifier.set("")
+    }
+    test {
+        useJUnitPlatform()
     }
 }

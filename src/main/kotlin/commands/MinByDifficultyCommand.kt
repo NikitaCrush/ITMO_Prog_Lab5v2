@@ -5,7 +5,7 @@ package commands
  *
  * @property labWorkCollection The lab work collection to be used for searching.
  */
-class MinByDifficultyCommand() : Command() {
+class MinByDifficultyCommand : Command() {
     override fun execute(args: List<Any>): String {
         return labWorkCollection.minByDifficulty().toString()
     }

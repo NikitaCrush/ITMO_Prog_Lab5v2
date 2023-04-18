@@ -11,7 +11,7 @@ import utils.LabWorkReader
  * @property labWorkCollection The lab work collection to add the lab work to.
  * @property validator The validator used for input validation.
  */
-class AddIfMaxCommand() : Command() {
+class AddIfMaxCommand : Command() {
 
     override fun execute(args: List<Any>): String {
         val labWork = args[0] as LabWork

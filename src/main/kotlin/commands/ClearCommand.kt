@@ -7,7 +7,7 @@ import data.Messages
  *
  * @property labWorkCollection The lab work collection to be cleared.
  */
-class ClearCommand() : Command() {
+class ClearCommand : Command() {
     override fun execute(args: List<Any>): String {
         labWorkCollection.clear()
         return Messages.LAB_WORK_SUCCESS_CLEAR

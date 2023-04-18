@@ -2,7 +2,6 @@ package utils
 
 import data.Coordinates
 import data.Discipline
-//import data.Difficulty
 import exeptions.ValidationException
 
 /**

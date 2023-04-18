@@ -10,16 +10,15 @@ import utils.LabWorkReader
  * @property labWorkCollection The lab work collection to be updated.
  * @property validator The validator used for input validation.
  */
-class UpdateCommand() : Command() {
+class UpdateCommand : Command() {
 
     override fun execute(args: List<Any>): String {
         if (args.isEmpty() || args[0] !is String) {
             return "ID is not provided or has an incorrect format."
         }
 
-        val id: Long
-        try {
-            id = args[0].toString().toLong()
+        val id: Long = try {
+            args[0].toString().toLong()
         } catch (e: NumberFormatException) {
             return "Invalid ID format. Please enter a valid number."
         }

@@ -2,16 +2,13 @@ package commands
 
 import data.*
 import utils.LabWorkReader
-
 /**
  * The AddCommand class adds a new lab work to the collection.
  *
  * @property labWorkCollection The lab work collection to add the lab work to.
  * @property validator The validator used for input validation.
  */
-class AddCommand() : Command() {
-
-
+class AddCommand : Command() {
 
     override fun execute(args: List<Any>): String {
         val labWork = args[0] as LabWork

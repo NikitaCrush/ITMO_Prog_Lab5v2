@@ -5,7 +5,7 @@ package commands
  *
  * @property labWorkCollection The lab work collection to remove the first element from.
  */
-class RemoveHeadCommand() : Command() {
+class RemoveHeadCommand : Command() {
     override fun execute(args: List<Any>): String {
         return labWorkCollection.removeHead().toString()
     }

@@ -6,7 +6,7 @@ package commands
  *
  * @property labWorkCollection The lab work collection to be used for calculations.
  */
-class SumOfMinimalPointCommand() : Command() {
+class SumOfMinimalPointCommand : Command() {
     override fun execute(args: List<Any>): String {
         return labWorkCollection.sumOfMinimalPoint().toString()
     }

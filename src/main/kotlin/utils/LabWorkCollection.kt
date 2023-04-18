@@ -22,7 +22,7 @@ class LabWorkCollection(private val fileName: String) {
     /**
      * Loads the LabWork collection from the file.
      */
-    private fun loadFromFile() {
+    private fun loadFromFile() { //TODO почему коллекция умеет писать в файл ?
         try {
             val labWorkList = JsonUtil.loadFromFile(fileName, ListSerializer(LabWork.serializer()))
             labWorkList?.let { labWorkQueue.addAll(it) }
@@ -97,7 +97,7 @@ class LabWorkCollection(private val fileName: String) {
      *
      * @return The size of the collection.
      */
-    public fun size(): Int {
+     fun size(): Int {
         return labWorkQueue.size
     }
 

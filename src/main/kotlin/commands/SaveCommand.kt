@@ -7,7 +7,7 @@ import data.Messages
  *
  * @property labWorkCollection The lab work collection to be saved.
  */
-class SaveCommand() : Command() {
+class SaveCommand : Command() {
     override fun execute(args: List<Any>): String {
         labWorkCollection.saveToFile()
         return Messages.LAB_WORK_SUCCESS_SAVE

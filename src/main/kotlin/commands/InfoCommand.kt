@@ -5,7 +5,7 @@ package commands
  *
  * @property labWorkCollection The lab work collection to get information about.
  */
-class InfoCommand() : Command() {
+class InfoCommand : Command() {
     override fun execute(args: List<Any>): String {
         return labWorkCollection.getInfo()
     }

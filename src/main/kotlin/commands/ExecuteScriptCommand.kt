@@ -1,10 +1,12 @@
 package commands
 
 import data.Messages
+import org.koin.core.component.inject
 import utils.CommandParser
 import utils.Printer
 import java.io.File
 import java.io.FileNotFoundException
+import java.util.*
 
 /**
  * The ExecuteScriptCommand class reads and executes commands from the specified file.
@@ -18,6 +20,7 @@ class ExecuteScriptCommand(
     private val printer: Printer,
     private val nestedLevel: Int = 0
 ) : Command() {
+    private val stack: Stack<String> by inject()
 
     fun copy(nestedLevel: Int): ExecuteScriptCommand {
         return ExecuteScriptCommand(commandParser, printer, nestedLevel)

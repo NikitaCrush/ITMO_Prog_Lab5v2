@@ -190,5 +190,21 @@
             "name": "43",
             "selfStudyHours": 34
         }
+    },
+    {
+        "id": 5325361007759555542,
+        "name": "fghjk",
+        "coordinates": {
+            "x": 76,
+            "y": 34.0
+        },
+        "creationDate": "2023-04-24T21:24:55.6903155",
+        "minimalPoint": 7,
+        "personalQualitiesMinimum": 5,
+        "difficulty": "EASY",
+        "discipline": {
+            "name": "sfs",
+            "selfStudyHours": 100
+        }
     }
 ]

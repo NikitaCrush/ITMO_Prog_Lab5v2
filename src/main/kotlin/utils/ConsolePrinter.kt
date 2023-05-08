@@ -1,7 +1,7 @@
 package utils
 
 /**
- * A Printer implementation that outputs messages to the console with a prefix "[OUTPUT]: ".
+ * A Printer implementation that outputs messages to the console with a prefix "[{OUTPUT}]: ".
  */
 class ConsolePrinter : Printer {
 

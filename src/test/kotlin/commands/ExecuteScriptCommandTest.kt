@@ -9,7 +9,6 @@ import org.koin.core.context.startKoin
 import utils.CommandExecutor
 import utils.CommandParser
 import utils.Printer
-import java.io.File
 
 internal class ExecuteScriptCommandTest {
     private val printer = object : Printer {
@@ -34,9 +33,7 @@ internal class ExecuteScriptCommandTest {
     @Test
     fun `test execute with recursive file`() {
 
-        startKoin {
-            modules(koinModule)
-        }
+
         val result = executeScriptCommand.execute(listOf("src\\test\\kotlin\\commands\\rec.txt"))
         assertEquals("Error: Recursion", result)
     }

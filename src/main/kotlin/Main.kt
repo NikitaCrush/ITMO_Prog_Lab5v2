@@ -23,12 +23,6 @@ fun main() {
     startKoin {
         modules(koinModule)
     }
-    // Read the file name from the environment variable
-    //val fileName = System.getenv("LAB_WORK_FILE") ?: "collection.json"
-
-    // Create and populate the LabWork collection
-    //val labWorkCollection = LabWorkCollection.fromFile(fileName)
-
     val printer = ConsolePrinter()
     val commandExecutor = CommandExecutor(printer)
     val commandParser = CommandParser(commandExecutor)

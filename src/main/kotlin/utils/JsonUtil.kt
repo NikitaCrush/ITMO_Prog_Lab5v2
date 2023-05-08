@@ -27,10 +27,6 @@ object JsonUtil {
         }
     }
 
-//    fun <T> toJson(obj: T, serializer: KSerializer<T>): String {
-//        return json.encodeToString(serializer, obj)
-//    }
-
     /**
      * Loads an object of the specified type from a JSON file.
      *
